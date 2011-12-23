@@ -37,7 +37,7 @@ public class Attractiveness implements EntryPoint {
 	private Image portrait = new Image("http://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/600px-Smiley.svg.png");
 	
 	// For storing state
-	private Cursor current;
+	//private Cursor current;
 
 	/**
 	 * This is the entry point method of our application.
@@ -48,7 +48,7 @@ public class Attractiveness implements EntryPoint {
 	 * </ul>
 	 */
 	public void onModuleLoad() {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		//PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		// Gather & store user's facebook information
 		// TODO: actually do this
