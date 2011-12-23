@@ -1,5 +1,11 @@
 package com.appspot.attractiveness.client;
 
+import javax.jdo.PersistenceManager;
+
+import com.appspot.attractiveness.PMF;
+import com.appspot.attractiveness.Portrait;
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -29,6 +35,9 @@ public class Attractiveness implements EntryPoint {
 	private RadioButton rate5 = new RadioButton("rating", "5");
 	private Button submitBtn = new Button("Rate!");
 	private Image portrait = new Image("http://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/600px-Smiley.svg.png");
+	
+	// For storing state
+	private Cursor current;
 
 	/**
 	 * This is the entry point method of our application.
@@ -39,8 +48,13 @@ public class Attractiveness implements EntryPoint {
 	 * </ul>
 	 */
 	public void onModuleLoad() {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		
 		// Gather & store user's facebook information
 		// TODO: actually do this
+		
+		// Get image URL to use
+		// TODO: actually do this using cursors and stuff
 		
 		// Build the UI.  Hooray for in code UI building!
 		ratePanel.add(rate1);
@@ -50,6 +64,7 @@ public class Attractiveness implements EntryPoint {
 		ratePanel.add(rate5);
 		submitPanel.add(ratePanel);
 		submitPanel.add(submitBtn);
+		//portrait.setUrl();
 		mainPanel.add(portrait);
 		mainPanel.add(submitPanel);
 		RootPanel.get("contentDiv").add(mainPanel);
