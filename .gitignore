@@ -1,1 +1,5 @@
 /gwt-unitCache
+.gwt/**
+test-classes/**
+war/WEB-INF/classes/**
+
