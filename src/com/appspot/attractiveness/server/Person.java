@@ -48,7 +48,7 @@ public class Person {
 	 * Constructs a {@link Person} object.
 	 * 
 	 * @param language
-	 *            the <a href =
+	 *            the <a href=
 	 *            "http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO
 	 *            639-1 language code</a> representing the language of the
 	 *            {@link Person}.
@@ -76,7 +76,7 @@ public class Person {
 	}
 
 	/**
-	 * @return the <a href =
+	 * @return the <a href=
 	 *         "http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO
 	 *         639-1 language code</a> representing the language of the
 	 *         {@link Person}.
@@ -87,7 +87,7 @@ public class Person {
 
 	/**
 	 * @param language
-	 *            the <a href =
+	 *            the <a href=
 	 *            "http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO
 	 *            639-1 language code</a> representing the language of the
 	 *            {@link Person}.
