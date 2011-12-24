@@ -1,4 +1,4 @@
-package com.appspot.attractiveness;
+package com.appspot.attractiveness.server;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;

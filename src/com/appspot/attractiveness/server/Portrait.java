@@ -1,4 +1,4 @@
-package com.appspot.attractiveness;
+package com.appspot.attractiveness.server;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -28,7 +28,7 @@ public class Portrait {
 	private String imageURL;
 
 	@Persistent
-	private Key personID;
+	private Person person;
 
 	// ... Constructors ...
 
@@ -43,9 +43,9 @@ public class Portrait {
 	 *            the identifying key for the {@link Person} object that this
 	 *            {@link Portrait} is of.
 	 */
-	public Portrait(String imageURL, Key personID) {
+	public Portrait(String imageURL, Person person) {
 		this.imageURL = imageURL;
-		this.personID = personID;
+		this.person = person;
 	}
 
 	// ... Accessors ...
@@ -75,15 +75,15 @@ public class Portrait {
 	/**
 	 * @return the personID
 	 */
-	public Key getPersonID() {
-		return personID;
+	public Person getPerson() {
+		return person;
 	}
 
 	/**
 	 * @param personID
 	 *            the personID to set
 	 */
-	public void setPersonID(Key personID) {
-		this.personID = personID;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }

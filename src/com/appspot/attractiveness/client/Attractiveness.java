@@ -1,19 +1,11 @@
 package com.appspot.attractiveness.client;
 
-import javax.jdo.PersistenceManager;
-
-import com.appspot.attractiveness.PMF;
-import com.appspot.attractiveness.Portrait;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -35,9 +27,6 @@ public class Attractiveness implements EntryPoint {
 	private RadioButton rate5 = new RadioButton("rating", "5");
 	private Button submitBtn = new Button("Rate!");
 	private Image portrait = new Image("http://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/600px-Smiley.svg.png");
-	
-	// For storing state
-	//private Cursor current;
 
 	/**
 	 * This is the entry point method of our application.
@@ -47,9 +36,7 @@ public class Attractiveness implements EntryPoint {
 	 * <li>Construct the UI</li>
 	 * </ul>
 	 */
-	public void onModuleLoad() {
-		//PersistenceManager pm = PMF.get().getPersistenceManager();
-		
+	public void onModuleLoad() {		
 		// Gather & store user's facebook information
 		// TODO: actually do this
 		

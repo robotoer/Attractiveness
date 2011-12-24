@@ -1,4 +1,4 @@
-package com.appspot.attractiveness;
+package com.appspot.attractiveness.server;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;

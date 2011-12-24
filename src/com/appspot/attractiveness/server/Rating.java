@@ -1,4 +1,4 @@
-package com.appspot.attractiveness;
+package com.appspot.attractiveness.server;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -32,7 +32,7 @@ public class Rating {
 	private int rating;
 
 	@Persistent
-	private Key portraitID;
+	private Portrait portrait;
 
 	// ... Constructors ...
 
@@ -52,10 +52,10 @@ public class Rating {
 	 *            {@link Rating} is about. This should be easy to obtain by
 	 *            using the {@link Portrait}.getKey() method.
 	 */
-	public Rating(int labelerFacebookID, int rating, Key portraitID) {
+	public Rating(int labelerFacebookID, int rating, Portrait portrait) {
 		this.labelerFacebookID = labelerFacebookID;
 		this.rating = rating;
-		this.portraitID = portraitID;
+		this.portrait = portrait;
 	}
 
 	// ... Accessors ...
@@ -100,15 +100,15 @@ public class Rating {
 	/**
 	 * @return the portraitID
 	 */
-	public Key getPortraitID() {
-		return portraitID;
+	public Portrait getPortrait() {
+		return portrait;
 	}
 
 	/**
 	 * @param portraitID
 	 *            the portraitID to set
 	 */
-	public void setPortraitID(Key portraitID) {
-		this.portraitID = portraitID;
+	public void setPortrait(Portrait portrait) {
+		this.portrait = portrait;
 	}
 }
