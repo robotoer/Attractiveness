@@ -33,6 +33,12 @@ public class Portrait {
 	// ... Constructors ...
 
 	/**
+	 * Constructs an empty {@link Portrait} object.
+	 */
+	public Portrait() {
+	}
+
+	/**
 	 * Constructs a {@link Portrait} object.
 	 * 
 	 * @param imageURL

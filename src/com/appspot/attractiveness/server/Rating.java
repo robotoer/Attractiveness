@@ -35,6 +35,12 @@ public class Rating {
 	private Portrait portrait;
 
 	// ... Constructors ...
+	
+	/**
+	 * Constructs an empty {@link Rating} object.
+	 */
+	public Rating() {
+	}
 
 	/**
 	 * Constructs a {@link Rating} object.
