@@ -1,11 +1,13 @@
 package com.appspot.attractiveness.server;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
 
 /**
  * A Portrait represents one image of a {@link Person}.
@@ -22,7 +24,7 @@ public class Portrait {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	private Long key;
 
 	@Persistent
 	private String imageURL;
@@ -59,7 +61,7 @@ public class Portrait {
 	/**
 	 * @return the key of this {@link Portrait} in the Datastore
 	 */
-	public Key getKey() {
+	public Long getKey() {
 		return key;
 	}
 
@@ -92,4 +94,31 @@ public class Portrait {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+
+	// ... Request Implementation ...
+
+	public static final PersistenceManager persistenceManager() {
+		return PMF.get().getPersistenceManager();
+	}
+
+	public static long countPortraits() {
+		return 0;
+	}
+
+	public static List<Portrait> findAllPortraits() {
+		return new ArrayList<Portrait>();
+	}
+
+	public static Portrait findPortrait(Long id) {
+		return new Portrait();
+	}
+
+	public void persist() {
+		
+	}
+	
+	public void remove() {
+		
+	}
+
 }

@@ -1,14 +1,23 @@
 package com.appspot.attractiveness.client;
 
+import com.appspot.attractiveness.shared.AttractivenessRequestFactory;
+import com.appspot.attractiveness.shared.PersonProxy;
+import com.appspot.attractiveness.shared.PersonRequest;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.ServerFailure;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -27,6 +36,9 @@ public class Attractiveness implements EntryPoint {
 	private RadioButton rate5 = new RadioButton("rating", "5");
 	private Button submitBtn = new Button("Rate!");
 	private Image portrait = new Image("http://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/600px-Smiley.svg.png");
+	
+	// Data layer stuff
+	private AttractivenessRequestFactory requestFactory;
 
 	/**
 	 * This is the entry point method of our application.
@@ -36,7 +48,12 @@ public class Attractiveness implements EntryPoint {
 	 * <li>Construct the UI</li>
 	 * </ul>
 	 */
-	public void onModuleLoad() {		
+	public void onModuleLoad() {
+		// Setup RequestFactory
+		EventBus eventBus = new SimpleEventBus();
+		requestFactory = GWT.create(AttractivenessRequestFactory.class);
+		requestFactory.initialize(eventBus);
+		
 		// Gather & store user's facebook information
 		// TODO: actually do this
 		
@@ -76,6 +93,26 @@ public class Attractiveness implements EntryPoint {
 					rating = 5;
 				
 				// Save the rating to the datastore
+				PersonRequest request = requestFactory.personRequest();
+				PersonProxy newPerson = request.create(PersonProxy.class);
+//				newPerson.setAge(21);
+//				newPerson.setAvailable(false);
+//				newPerson.setLanguage("en");
+//				newPerson.setMale(true);
+//				request.persist().using(newPerson).fire(new Receiver<Void>() {
+//					@Override
+//					public void onSuccess(Void response) {
+//						Window.alert("Successfully added person!");
+//					}
+//					
+//					@Override
+//					public void onFailure(ServerFailure error) {
+//						super.onFailure(error);
+//						Window.alert("Failed to add person!");
+//					}
+//				});
+				
+				Window.alert("Rating: " + rating);
 			}
 		});
 	}

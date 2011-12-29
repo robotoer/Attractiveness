@@ -13,6 +13,8 @@ import com.google.web.bindery.requestfactory.shared.ValueProxy;
 @ProxyForName(value = "com.appspot.attractiveness.server.Portrait", locator = "com.appspot.attractiveness.server.PortraitLocator")
 public interface PortraitProxy extends ValueProxy {
 
+	Long getKey();
+
 	String getImageURL();
 
 	void setImageURL(String imageURL);

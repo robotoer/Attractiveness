@@ -13,6 +13,8 @@ import com.google.web.bindery.requestfactory.shared.ValueProxy;
 @ProxyForName(value = "com.appspot.attractiveness.server.Person", locator = "com.appspot.attractiveness.server.PersonLocator")
 public interface PersonProxy extends ValueProxy {
 
+	Long getKey();
+
 	String getLanguage();
 
 	void setLanguage(String language);

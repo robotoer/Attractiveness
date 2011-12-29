@@ -1,11 +1,13 @@
 package com.appspot.attractiveness.server;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
 
 /**
  * A Rating represents one labeling for a {@link Portrait} (an image of a
@@ -23,7 +25,7 @@ public class Rating {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	private Long key;
 
 	@Persistent
 	private int labelerFacebookID;
@@ -69,7 +71,7 @@ public class Rating {
 	/**
 	 * @return the key of this {@link Rating} in the Datastore
 	 */
-	public Key getKey() {
+	public Long getKey() {
 		return key;
 	}
 
@@ -117,4 +119,31 @@ public class Rating {
 	public void setPortrait(Portrait portrait) {
 		this.portrait = portrait;
 	}
+	
+	// ... Request Implementation ...
+	
+	public static final PersistenceManager persistenceManager() {
+		return PMF.get().getPersistenceManager();
+	}
+	
+	public static long countRatings() {
+		return 0;
+	}
+	
+	public static List<Rating> findAllRatings() {
+		return new ArrayList<Rating>();
+	}
+	
+	public static Rating findRating(Long id) {
+		return new Rating();
+	}
+	
+	public void persist() {
+		
+	}
+	
+	public void remove() {
+		
+	}
+	
 }

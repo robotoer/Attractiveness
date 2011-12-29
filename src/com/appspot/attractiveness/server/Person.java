@@ -1,11 +1,13 @@
 package com.appspot.attractiveness.server;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
 
 /**
  * A Person represents a human being (duh).
@@ -22,7 +24,7 @@ public class Person {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	private Long key;
 
 	@Persistent
 	private String language;
@@ -71,7 +73,7 @@ public class Person {
 	/**
 	 * @return the key
 	 */
-	public Key getKey() {
+	public Long getKey() {
 		return key;
 	}
 
@@ -140,4 +142,32 @@ public class Person {
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
+	
+	// ... Request Implementation ...
+	
+	public static final PersistenceManager persistenceManager() {
+		return PMF.get().getPersistenceManager();
+	}
+	
+	public static long countPeople() {
+//		PersistenceManager pm = persistenceManager();
+		return 0;
+	}
+	
+	public static List<Person> findAllPeople() {
+		return new ArrayList<Person>();
+	}
+	
+	public static Person findPerson(Long id) {
+		return new Person();
+	}
+	
+	public void persist() {
+		
+	}
+	
+	public void remove() {
+		
+	}
+	
 }
