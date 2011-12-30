@@ -37,7 +37,7 @@ public class Rating {
 	private Portrait portrait;
 
 	// ... Constructors ...
-	
+
 	/**
 	 * Constructs an empty {@link Rating} object.
 	 */
@@ -74,7 +74,7 @@ public class Rating {
 	public Long getKey() {
 		return key;
 	}
-	
+
 	/**
 	 * @param key
 	 *            try avoiding setting the key manually. This should be
@@ -128,31 +128,59 @@ public class Rating {
 	public void setPortrait(Portrait portrait) {
 		this.portrait = portrait;
 	}
-	
+
 	// ... Request Implementation ...
-	
+
 	public static final PersistenceManager persistenceManager() {
 		return PMF.get().getPersistenceManager();
 	}
-	
+
 	public static long countRatings() {
 		return 0;
 	}
-	
+
 	public static List<Rating> findAllRatings() {
-		return new ArrayList<Rating>();
+		PersistenceManager pm = persistenceManager();
+		try {
+			return new ArrayList<Rating>(pm.detachCopyAll(pm
+					.getManagedObjects(Rating.class)));
+		} finally {
+			pm.close();
+		}
 	}
-	
+
 	public static Rating findRating(Long id) {
-		return new Rating();
+		PersistenceManager pm = persistenceManager();
+		try {
+			Rating found = pm.getObjectById(Rating.class, id);
+			return pm.detachCopy(found);
+		} finally {
+			pm.close();
+		}
 	}
-	
+
+	/**
+	 * Makes this instance of {@link Rating} persistent.
+	 */
 	public void persist() {
-		
+		PersistenceManager pm = persistenceManager();
+		try {
+			pm.makePersistent(this);
+		} finally {
+			pm.close();
+		}
 	}
-	
+
+	/**
+	 * Makes this instance of {@link Rating} non-persistent.
+	 */
 	public void remove() {
-		
+		PersistenceManager pm = persistenceManager();
+		try {
+			pm.deletePersistent(this);
+		} finally {
+			pm.close();
+		}
 	}
-	
+
 }

@@ -164,19 +164,47 @@ public class Person {
 	}
 
 	public static List<Person> findAllPeople() {
-		return new ArrayList<Person>();
+		PersistenceManager pm = persistenceManager();
+		try {
+			return new ArrayList<Person>(pm.detachCopyAll(pm
+					.getManagedObjects(Person.class)));
+		} finally {
+			pm.close();
+		}
 	}
 
 	public static Person findPerson(Long id) {
-		return new Person();
+		PersistenceManager pm = persistenceManager();
+		try {
+			Person found = pm.getObjectById(Person.class, id);
+			return pm.detachCopy(found);
+		} finally {
+			pm.close();
+		}
 	}
 
+	/**
+	 * Makes this instance of {@link Person} persistent.
+	 */
 	public void persist() {
-
+		PersistenceManager pm = persistenceManager();
+		try {
+			pm.makePersistent(this);
+		} finally {
+			pm.close();
+		}
 	}
 
+	/**
+	 * Makes this instance of {@link Person} non-persistent.
+	 */
 	public void remove() {
-
+		PersistenceManager pm = persistenceManager();
+		try {
+			pm.deletePersistent(this);
+		} finally {
+			pm.close();
+		}
 	}
 
 }

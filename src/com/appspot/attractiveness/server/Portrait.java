@@ -64,7 +64,7 @@ public class Portrait {
 	public Long getKey() {
 		return key;
 	}
-	
+
 	/**
 	 * @param key
 	 *            try avoiding setting the key manually. This should be
@@ -115,19 +115,47 @@ public class Portrait {
 	}
 
 	public static List<Portrait> findAllPortraits() {
-		return new ArrayList<Portrait>();
+		PersistenceManager pm = persistenceManager();
+		try {
+			return new ArrayList<Portrait>(pm.detachCopyAll(pm
+					.getManagedObjects(Portrait.class)));
+		} finally {
+			pm.close();
+		}
 	}
 
 	public static Portrait findPortrait(Long id) {
-		return new Portrait();
+		PersistenceManager pm = persistenceManager();
+		try {
+			Portrait found = pm.getObjectById(Portrait.class, id);
+			return pm.detachCopy(found);
+		} finally {
+			pm.close();
+		}
 	}
 
+	/**
+	 * Makes this instance of {@link Portrait} persistent.
+	 */
 	public void persist() {
-		
+		PersistenceManager pm = persistenceManager();
+		try {
+			pm.makePersistent(this);
+		} finally {
+			pm.close();
+		}
 	}
-	
+
+	/**
+	 * Makes this instance of {@link Portrait} non-persistent.
+	 */
 	public void remove() {
-		
+		PersistenceManager pm = persistenceManager();
+		try {
+			pm.deletePersistent(this);
+		} finally {
+			pm.close();
+		}
 	}
 
 }
