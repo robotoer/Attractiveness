@@ -15,7 +15,7 @@
   <inherits name='com.google.web.bindery.requestfactory.RequestFactory'/>
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='com.appspot.attractiveness.client.Attractiveness'/>
+  <entry-point class='com.appspot.attractiveness.client.RatingWidget'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

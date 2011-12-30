@@ -6,6 +6,7 @@ package com.appspot.attractiveness.client;
 import com.appspot.attractiveness.shared.AttractivenessRequestFactory;
 import com.appspot.attractiveness.shared.PersonProxy;
 import com.appspot.attractiveness.shared.PersonRequest;
+import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -25,7 +27,7 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 /**
  * @author Robert Chu
  */
-public class RatingWidget extends Composite {
+public class RatingWidget extends Composite implements EntryPoint {
 
 	private static RatingWidgetUiBinder uiBinder = GWT
 			.create(RatingWidgetUiBinder.class);
@@ -113,6 +115,14 @@ public class RatingWidget extends Composite {
 		});
 
 		Window.alert("Rating: " + rating);
+	}
+
+	/**
+	 * Entry point classes define <code>onModuleLoad()</code>.
+	 */
+	@Override
+	public void onModuleLoad() {
+		RootPanel.get("contentDiv").add(new RatingWidget());
 	}
 
 }
