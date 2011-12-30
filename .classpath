@@ -9,6 +9,7 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="shared"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/requestfactory-server.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

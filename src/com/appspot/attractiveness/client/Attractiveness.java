@@ -95,22 +95,23 @@ public class Attractiveness implements EntryPoint {
 				// Save the rating to the datastore
 				PersonRequest request = requestFactory.personRequest();
 				PersonProxy newPerson = request.create(PersonProxy.class);
-//				newPerson.setAge(21);
-//				newPerson.setAvailable(false);
-//				newPerson.setLanguage("en");
-//				newPerson.setMale(true);
-//				request.persist().using(newPerson).fire(new Receiver<Void>() {
-//					@Override
-//					public void onSuccess(Void response) {
-//						Window.alert("Successfully added person!");
-//					}
-//					
-//					@Override
-//					public void onFailure(ServerFailure error) {
-//						super.onFailure(error);
-//						Window.alert("Failed to add person!");
-//					}
-//				});
+				newPerson.setAge(21);
+				newPerson.setAvailable(false);
+				newPerson.setLanguage("en");
+				newPerson.setMale(true);
+				request.persist().using(newPerson).fire(new Receiver<Void>() {
+					@Override
+					public void onSuccess(Void response) {
+						Window.alert("Successfully added person!");
+					}
+					
+					@Override
+					public void onFailure(ServerFailure error) {
+						super.onFailure(error);
+						
+						Window.alert("Failed to add person!");
+					}
+				});
 				
 				Window.alert("Rating: " + rating);
 			}
