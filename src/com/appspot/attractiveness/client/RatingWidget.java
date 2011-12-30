@@ -9,6 +9,12 @@ import com.appspot.attractiveness.shared.PersonRequest;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -16,6 +22,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -31,6 +38,8 @@ public class RatingWidget extends Composite implements EntryPoint {
 
 	private static RatingWidgetUiBinder uiBinder = GWT
 			.create(RatingWidgetUiBinder.class);
+
+	private static final String FB_OPENGRAPH_URL = "https://graph.facebook.com/";
 
 	interface RatingWidgetUiBinder extends UiBinder<Widget, RatingWidget> {
 	}
@@ -50,6 +59,8 @@ public class RatingWidget extends Composite implements EntryPoint {
 	protected Button submitBtn;
 	@UiField
 	protected Image portrait;
+	@UiField
+	protected Label fbInfo;
 
 	// Data layer stuff
 	private AttractivenessRequestFactory requestFactory;
@@ -57,7 +68,7 @@ public class RatingWidget extends Composite implements EntryPoint {
 	/**
 	 * This method should do the following:
 	 * <ul>
-	 * <li>Gather and store the rater's facebook information
+	 * <li>Gather and store the rater's Facebook information
 	 * <li>Construct the UI</li>
 	 * </ul>
 	 */
@@ -70,12 +81,36 @@ public class RatingWidget extends Composite implements EntryPoint {
 		requestFactory.initialize(eventBus);
 
 		// Gather & store user's facebook information
-		// TODO: actually do this
+		String userID = Window.Location.getParameter("user_id");
+		if (userID == null || userID.isEmpty()) {
+			fbInfo.setText("Not logged in");
+		} else {
+			fbInfo.setText("user_id = " + userID);
+//			String fbQueryUrl = FB_OPENGRAPH_URL + userID;
+//			fbQueryUrl = URL.encode(fbQueryUrl);
+//			try {
+//				new RequestBuilder(RequestBuilder.GET, fbQueryUrl).sendRequest(
+//						null, new RequestCallback() {
+//							@Override
+//							public void onResponseReceived(Request request,
+//									Response response) {
+//								// TODO: Do stuff with json result
+//								response.getText();
+//							}
+//
+//							@Override
+//							public void onError(Request request,
+//									Throwable exception) {
+//
+//							}
+//						});
+//			} catch (RequestException ex) {
+//				Window.alert(ex.getMessage());
+//			}
+		}
 
 		// Get image URL to use
 		// TODO: actually do this using cursors and stuff
-		
-		Window.alert("blahblah");
 	}
 
 	@UiHandler("submitBtn")
@@ -113,8 +148,6 @@ public class RatingWidget extends Composite implements EntryPoint {
 				Window.alert("Failed to add person!");
 			}
 		});
-
-		Window.alert("Rating: " + rating);
 	}
 
 	/**

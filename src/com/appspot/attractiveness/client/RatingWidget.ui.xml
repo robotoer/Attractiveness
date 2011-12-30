@@ -26,6 +26,7 @@
 					<g:cell horizontalAlignment="ALIGN_CENTER"
 						verticalAlignment="ALIGN_BOTTOM">
 						<g:VerticalPanel styleName="{style.ratepanel}">
+							<g:Label ui:field="fbInfo" />
 							<g:HorizontalPanel>
 								<g:Label>1</g:Label>
 								<g:RadioButton name="rating" ui:field="r1" />
