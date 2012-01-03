@@ -11,5 +11,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/requestfactory-server.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-oauth2-0.2-alpha.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -1,11 +1,26 @@
 /**
- * 
+ * Copyright (C) 2011 Robert Chu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.appspot.attractiveness.client;
 
 import com.appspot.attractiveness.shared.AttractivenessRequestFactory;
 import com.appspot.attractiveness.shared.PersonProxy;
 import com.appspot.attractiveness.shared.PersonRequest;
+import com.google.api.gwt.oauth2.client.Auth;
+import com.google.api.gwt.oauth2.client.AuthRequest;
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,7 +54,10 @@ public class RatingWidget extends Composite implements EntryPoint {
 	private static RatingWidgetUiBinder uiBinder = GWT
 			.create(RatingWidgetUiBinder.class);
 
-	private static final String FB_OPENGRAPH_URL = "https://graph.facebook.com/";
+	private static final String FB_OAUTH_URL = "https://www.facebook.com/dialog/oauth?response_type=token";
+	private static final String CLIENT_ID = "268396153218694";
+	private static final String RELATIONSHIPS_SCOPE = "user_relationships";
+	private static final String ABOUT_ME_SCOPE = "user_about_me";
 
 	interface RatingWidgetUiBinder extends UiBinder<Widget, RatingWidget> {
 	}
@@ -75,18 +93,13 @@ public class RatingWidget extends Composite implements EntryPoint {
 	public RatingWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		// Setup RequestFactory
-		EventBus eventBus = new SimpleEventBus();
-		requestFactory = GWT.create(AttractivenessRequestFactory.class);
-		requestFactory.initialize(eventBus);
-
 		// Gather & store user's facebook information
 		//String userID = Window.Location.getParameter("user_id");
-		String userID = Window.Location.getQueryString();
-		if (userID == null || userID.isEmpty()) {
-			fbInfo.setText("Not logged in");
-		} else {
-			fbInfo.setText("user_id = " + userID);
+//		String userID = Window.Location.getQueryString();
+//		if (userID == null || userID.isEmpty()) {
+//			fbInfo.setText("Not logged in");
+//		} else {
+//			fbInfo.setText("user_id = " + userID);
 //			String fbQueryUrl = FB_OPENGRAPH_URL + userID;
 //			fbQueryUrl = URL.encode(fbQueryUrl);
 //			try {
@@ -108,7 +121,7 @@ public class RatingWidget extends Composite implements EntryPoint {
 //			} catch (RequestException ex) {
 //				Window.alert(ex.getMessage());
 //			}
-		}
+//		}
 
 		// Get image URL to use
 		// TODO: actually do this using cursors and stuff
@@ -156,7 +169,26 @@ public class RatingWidget extends Composite implements EntryPoint {
 	 */
 	@Override
 	public void onModuleLoad() {
-		RootPanel.get("contentDiv").add(new RatingWidget());
+		// Setup RequestFactory
+		EventBus eventBus = new SimpleEventBus();
+		requestFactory = GWT.create(AttractivenessRequestFactory.class);
+		requestFactory.initialize(eventBus);
+		
+		AuthRequest request = new AuthRequest(FB_OAUTH_URL, CLIENT_ID).withScopes(RELATIONSHIPS_SCOPE, ABOUT_ME_SCOPE);
+		Auth.get().login(request, new Callback<String, Throwable>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("Got User's auth_token: " + result);
+			}
+			
+			@Override
+			public void onFailure(Throwable reason) {
+				Window.alert("Failed to Authenticate: " + reason.getMessage());
+			}
+		});
+		
+		RootPanel.get("contentDiv").add(this);
 	}
 
 }
