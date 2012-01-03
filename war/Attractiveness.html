@@ -2,14 +2,29 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" rel="stylesheet" href="Attractiveness.css">
+    <!-- <link type="text/css" rel="stylesheet" href="Attractiveness.css"> -->
+    <style type="text/css">
+    	/* CSS to make height fill properly stolen from http://peterned.home.xs4all.nl/examples/csslayout1.html */
+		html,body {
+			margin: 0;
+			padding: 0;
+			height: 100%; /* needed for container min-height */
+		}
+		
+		div#contentDiv {
+			margin: 0 auto; /* center, not in IE5 */
+			width: 730px;
+			height: 100%; /* IE6: treaded as min-height*/
+			min-height: 100%; /* real browsers */
+		}
+    </style>
     <title>Researching Attractiveness</title>
     <script type="text/javascript" language="javascript" src="attractiveness/attractiveness.nocache.js"></script>
   </head>
 
   <body>
   	<!-- This is where our stuff goes. -->
-  	<div id="contentDiv" style="width: 100%; height: 800px"></div>
+  	<div id="contentDiv"></div>
     
     <!-- We need javascript in our application as just about everything in it uses ajax -->
     <noscript>

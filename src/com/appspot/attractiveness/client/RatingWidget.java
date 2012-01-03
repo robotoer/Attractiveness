@@ -81,7 +81,8 @@ public class RatingWidget extends Composite implements EntryPoint {
 		requestFactory.initialize(eventBus);
 
 		// Gather & store user's facebook information
-		String userID = Window.Location.getParameter("user_id");
+		//String userID = Window.Location.getParameter("user_id");
+		String userID = Window.Location.getQueryString();
 		if (userID == null || userID.isEmpty()) {
 			fbInfo.setText("Not logged in");
 		} else {
