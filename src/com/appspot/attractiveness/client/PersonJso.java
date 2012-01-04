@@ -15,11 +15,9 @@
  */
 package com.appspot.attractiveness.client;
 
-import org.joda.time.DateTime;
-import org.joda.time.Years;
-import org.joda.time.format.DateTimeFormat;
-
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
 
 /**
  * This class is used to access JSON data from a facebook OpenGraph API call.
@@ -33,6 +31,19 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public class PersonJso extends JavaScriptObject {
 	protected PersonJso() {
+	}
+	
+	/**
+	 * Create and populate a {@link PersonJso} object from a JSON string.
+	 * @param json the JSON string to convert
+	 * @return the {@link PersonJso} object
+	 */
+	public static final PersonJso fromJSON(String json) {
+		JSONObject obj = JSONParser.parseStrict(json).isObject();
+		if(obj == null)
+			return null;
+		else
+			return obj.getJavaScriptObject().cast();
 	}
 
 	// I only implemented the basic features that we initially scoped out.
@@ -74,8 +85,10 @@ public class PersonJso extends JavaScriptObject {
 		if(birthday == null)
 			return null;
 		else {
-			DateTime parsedBirthday = DateTimeFormat.forPattern("MM/dd/yyyy").parseDateTime(birthday); 
-			return Years.yearsBetween(parsedBirthday, new DateTime()).getYears();
+			return 0;
+			// TODO: This should use GWT DateTime: http://code.google.com/p/gwt-examples/wiki/gwtDateTime
+//			DateTime parsedBirthday = DateTimeFormat.forPattern("MM/dd/yyyy").parseDateTime(birthday); 
+//			return Years.yearsBetween(parsedBirthday, new DateTime()).getYears();
 		}
 	}
 }

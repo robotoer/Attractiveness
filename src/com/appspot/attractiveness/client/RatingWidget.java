@@ -59,6 +59,8 @@ public class RatingWidget extends Composite implements EntryPoint {
 	private static final String RELATIONSHIPS_SCOPE = "user_relationships";
 	private static final String ABOUT_ME_SCOPE = "user_about_me";
 
+	private static final String PERSON_GRAPH_QUERY = "https://graph.facebook.com/me?";
+
 	interface RatingWidgetUiBinder extends UiBinder<Widget, RatingWidget> {
 	}
 
@@ -92,36 +94,6 @@ public class RatingWidget extends Composite implements EntryPoint {
 	 */
 	public RatingWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-
-		// Gather & store user's facebook information
-		//String userID = Window.Location.getParameter("user_id");
-//		String userID = Window.Location.getQueryString();
-//		if (userID == null || userID.isEmpty()) {
-//			fbInfo.setText("Not logged in");
-//		} else {
-//			fbInfo.setText("user_id = " + userID);
-//			String fbQueryUrl = FB_OPENGRAPH_URL + userID;
-//			fbQueryUrl = URL.encode(fbQueryUrl);
-//			try {
-//				new RequestBuilder(RequestBuilder.GET, fbQueryUrl).sendRequest(
-//						null, new RequestCallback() {
-//							@Override
-//							public void onResponseReceived(Request request,
-//									Response response) {
-//								// TODO: Do stuff with json result
-//								response.getText();
-//							}
-//
-//							@Override
-//							public void onError(Request request,
-//									Throwable exception) {
-//
-//							}
-//						});
-//			} catch (RequestException ex) {
-//				Window.alert(ex.getMessage());
-//			}
-//		}
 
 		// Get image URL to use
 		// TODO: actually do this using cursors and stuff
@@ -173,21 +145,51 @@ public class RatingWidget extends Composite implements EntryPoint {
 		EventBus eventBus = new SimpleEventBus();
 		requestFactory = GWT.create(AttractivenessRequestFactory.class);
 		requestFactory.initialize(eventBus);
-		
-		AuthRequest request = new AuthRequest(FB_OAUTH_URL, CLIENT_ID).withScopes(RELATIONSHIPS_SCOPE, ABOUT_ME_SCOPE);
+
+		AuthRequest request = new AuthRequest(FB_OAUTH_URL, CLIENT_ID)
+				.withScopes(RELATIONSHIPS_SCOPE, ABOUT_ME_SCOPE);
 		Auth.get().login(request, new Callback<String, Throwable>() {
-			
 			@Override
 			public void onSuccess(String result) {
-				Window.alert("Got User's auth_token: " + result);
+				// TODO: This should be externalized into a seperate Facebook
+				// Opengraph GWT library
+				String fbQueryUrl = PERSON_GRAPH_QUERY + "access_token="
+						+ result;
+				fbQueryUrl = URL.encode(fbQueryUrl);
+				try {
+					new RequestBuilder(RequestBuilder.GET, fbQueryUrl)
+							.sendRequest(null, new RequestCallback() {
+								@Override
+								public void onResponseReceived(Request request,
+										Response response) {
+									PersonJso personData = PersonJso
+											.fromJSON(response.getText());
+									Window.alert("Gender: "
+											+ personData.getGender()
+											+ ", Birthday: "
+											+ personData.getBirthday()
+											+ ", RelStatus: "
+											+ personData
+													.getRelationshipStatus());
+								}
+
+								@Override
+								public void onError(Request request,
+										Throwable exception) {
+									Window.alert("I was unable to get data: " + exception.getMessage());
+								}
+							});
+				} catch (RequestException ex) {
+					Window.alert(ex.getMessage());
+				}
 			}
-			
+
 			@Override
 			public void onFailure(Throwable reason) {
 				Window.alert("Failed to Authenticate: " + reason.getMessage());
 			}
 		});
-		
+
 		RootPanel.get("contentDiv").add(this);
 	}
 
